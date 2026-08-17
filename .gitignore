@@ -12,3 +12,7 @@ sandbox
 /Meta/
 data*
 docs
+/.uvr/library/
+/.uvr/activate*
+
+.spack-env

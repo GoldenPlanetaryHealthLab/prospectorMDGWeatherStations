@@ -1,23 +1,31 @@
 {
-    "r.plot.useHttpgd": true,
-    "r.rterm.linux": "/n/home03/ttapera/.conda/envs/madagascar-weather-stations/bin/radian",
-    "r.useRenvLibPath": true,
-    "r.workspaceViewer.showObjectSize": true,
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "terminal.integrated.profiles.linux": {
-        "bash": {
-        "path": "/bin/bash"
-        }
-    },
-    "livePreview.defaultPreviewPath": "/docs/index.html",
-    "r.bracketedPaste": true,
-    "r.sessionWatcher": true,
-    "r.alwaysUseActiveTerminal": true,
-    "r.lsp.path": "/usr/local/bin/R",
-    "r.rpath.linux": "/n/sw/helmod-rocky8/apps/Core/R/4.5.1-fasrc01/bin/R",
-    "python.terminal.activateEnvInCurrentTerminal": true,
-    "r.libPaths": [
-        "/n/home03/ttapera/.cache/R/renv/library/MadagascarWeatherStations-3f971751/linux-rocky-8.10/R-4.5/x86_64-pc-linux-gnu",
-        "/n/home03/ttapera/.cache/R/renv/sandbox/linux-rocky-8.10/R-4.5/x86_64-pc-linux-gnu/d2ec90c5"
-    ]
+  "livePreview.defaultPreviewPath": "/docs/index.html",
+  "positron.r.customBinaries": [
+    "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/bin/R",
+    "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R"
+  ],
+  "positron.r.customRootFolders": [
+    "/n/home03/ttapera/.uvr/r-versions"
+  ],
+  "positron.r.interpreters.default": "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "r.alwaysUseActiveTerminal": true,
+  "r.bracketedPaste": true,
+  "r.libPaths": [
+    "/n/home03/ttapera/.cache/R/renv/library/MadagascarWeatherStations-3f971751/linux-rocky-8.10/R-4.5/x86_64-pc-linux-gnu",
+    "/n/home03/ttapera/.cache/R/renv/sandbox/linux-rocky-8.10/R-4.5/x86_64-pc-linux-gnu/d2ec90c5"
+  ],
+  "r.lsp.path": "/usr/local/bin/R",
+  "r.plot.useHttpgd": true,
+  "r.rpath.linux": "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
+  "r.rterm.linux": "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
+  "r.sessionWatcher": true,
+  "r.useRenvLibPath": true,
+  "r.workspaceViewer.showObjectSize": true,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "/bin/bash"
+    }
+  }
 }
