@@ -67,17 +67,20 @@ EOF
     ls /usr/lib64/libclang.so* || true
     cargo --version
 
-    # Build Rust binaries against this Rocky 8 environment
     cargo install tree-sitter-cli \
       --version 0.26.11 \
       --locked \
       --root /tmp/rust-tools
 
-    cargo install arf \
+    cargo install \
+      --git https://github.com/eitsupi/arf \
+      arf-console \
       --locked \
       --root /tmp/rust-tools
 
-
+    /tmp/rust-tools/bin/tree-sitter --version
+    /tmp/rust-tools/bin/arf --version
+    
     # Install Quarto
     QUARTO_VERSION=1.10.18
     QUARTO_RPM="quarto-${QUARTO_VERSION}-linux-x86_64.rpm"
