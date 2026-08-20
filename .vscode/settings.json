@@ -2,12 +2,13 @@
   "livePreview.defaultPreviewPath": "/docs/index.html",
   "positron.r.customBinaries": [
     "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/bin/R",
-    "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R"
+    "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
+    "/opt/views/view/rlib/R/bin/R"
   ],
   "positron.r.customRootFolders": [
     "/n/home03/ttapera/.uvr/r-versions"
   ],
-  "positron.r.interpreters.default": "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
+  "positron.r.interpreters.default": "/opt/views/view/rlib/R/bin/R",
   "python.terminal.activateEnvInCurrentTerminal": true,
   "r.alwaysUseActiveTerminal": true,
   "r.bracketedPaste": true,
@@ -17,8 +18,8 @@
   ],
   "r.lsp.path": "/usr/local/bin/R",
   "r.plot.useHttpgd": true,
-  "r.rpath.linux": "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
-  "r.rterm.linux": "/n/holylabs/cgolden_lab/Lab/projects/madagascar_weather_stations/MadagascarWeatherStations/.spack-env/view/rlib/R/bin/R",
+  "r.rpath.linux": "/opt/views/view/rlib/R/bin/R",
+  "r.rterm.linux": "/opt/views/view/rlib/R/bin/R",
   "r.sessionWatcher": true,
   "r.useRenvLibPath": true,
   "r.workspaceViewer.showObjectSize": true,

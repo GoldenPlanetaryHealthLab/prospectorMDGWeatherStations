@@ -1,0 +1,147 @@
+Bootstrap: docker
+From: spack/rockylinux8:develop
+Stage: build
+
+%post
+  # Update, install and cleanup of system packages needed at build-time
+  dnf update -y && dnf install -y epel-release && dnf update -y
+  dnf install -y gcc gcc-c++ make clang-devel llvm-devel
+  rm -rf /var/cache/dnf && dnf clean all
+
+  # Create the manifest file for the installation in /opt/spack-environment
+  mkdir /opt/spack-environment && cd /opt/spack-environment
+  cat << EOF > spack.yaml
+spack:
+  specs:
+  - r@4.5.1
+  - python@3.14
+  - neovim
+  - gcc@13
+  - cmake
+  - libgit2
+  - curl
+  - openssl
+  - zstd
+  - lz4
+  - snappy
+  - brotli
+  - rust
+  concretizer:
+    unify: true
+
+  config:
+    build_stage:
+    - /opt/spack-stage
+    install_tree:
+      root: /opt/software
+    template_dirs:
+    - .devcontainer/templates
+
+  view: /opt/views/view
+EOF
+
+  # Install all the required software
+  . /opt/spack/share/spack/setup-env.sh
+  spack -e . concretize
+  spack -e . install
+  spack gc -y
+  spack env activate --sh -d . >> /opt/spack-environment/environment_modifications.sh
+
+
+%post
+    set -euo pipefail
+
+    . /opt/spack-environment/environment_modifications.sh
+
+    export PATH="/opt/views/view/bin:/usr/local/bin:${PATH}"
+    export R_HOME="$(R RHOME)"
+    export LD_LIBRARY_PATH="${R_HOME}/lib:/opt/views/view/lib:${LD_LIBRARY_PATH:-}"
+    # Help bindgen/rquickjs-sys find libclang from the Rocky RPMs.
+    export LIBCLANG_PATH="/usr/lib64"
+
+    export CC="$(command -v gcc)"
+    export CXX="$(command -v g++)"
+
+    command -v cargo
+    command -v gcc
+    ls /usr/lib64/libclang.so* || true
+    cargo --version
+
+    # Build Rust binaries against this Rocky 8 environment
+    cargo install tree-sitter-cli \
+      --version 0.26.11 \
+      --locked \
+      --root /tmp/rust-tools
+
+    cargo install arf \
+      --locked \
+      --root /tmp/rust-tools
+
+
+    # Install Quarto
+    QUARTO_VERSION=1.10.18
+    QUARTO_RPM="quarto-${QUARTO_VERSION}-linux-x86_64.rpm"
+    QUARTO_URL="https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/${QUARTO_RPM}"
+
+    cd /tmp
+    curl -fsSLO "${QUARTO_URL}"
+    dnf install -y "./${QUARTO_RPM}"
+    rm -f "./${QUARTO_RPM}"
+
+
+    # Install uvr
+    curl -fsSL https://raw.githubusercontent.com/nbafrank/uvr/main/install.sh \
+      | UVR_INSTALL_DIR=/tmp/rust-tools/bin sh
+
+
+    # Install uv/uvx
+    curl -LsSf https://astral.sh/uv/install.sh \
+      | env UV_UNMANAGED_INSTALL=/tmp/rust-tools/bin sh
+
+
+    chmod -R a+rX /tmp/rust-tools
+
+Bootstrap: docker
+From: docker.io/rockylinux:8
+Stage: final
+
+%files from build
+  /opt/spack-environment /opt
+  /opt/software /opt
+  /opt/views /opt
+  /opt/spack-environment/environment_modifications.sh /opt/spack-environment/environment_modifications.sh
+
+%post
+
+  # Symlink the old view location
+  ln -s /opt/views/view /opt/view
+
+  # Update, install and cleanup of system packages needed at run-time
+  dnf update -y && dnf install -y epel-release && dnf update -y
+  dnf install -y bash less ca-certificates curl which findutils procps-ng git unzip
+  rm -rf /var/cache/dnf && dnf clean all
+  # Modify the environment without relying on sourcing shell specific files at startup
+  cat /opt/spack-environment/environment_modifications.sh >> $SINGULARITY_ENVIRONMENT
+
+
+%files from build
+    /tmp/rust-tools/bin/tree-sitter /usr/local/bin/tree-sitter
+    /tmp/rust-tools/bin/arf /usr/local/bin/arf
+    /tmp/rust-tools/bin/uv /usr/local/bin/uv
+    /tmp/rust-tools/bin/uvx /usr/local/bin/uvx
+    /tmp/rust-tools/bin/uvr /usr/local/bin/uvr
+
+%environment
+    export PATH="/usr/local/bin:/opt/views/view/bin:$PATH"
+
+%test
+    R --version
+    python --version
+    nvim --version
+    quarto --version
+    uv --version
+    uvr --version
+    tree-sitter --version
+    arf --version
+
+

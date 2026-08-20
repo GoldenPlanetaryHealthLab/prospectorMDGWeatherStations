@@ -3,13 +3,57 @@
 # It describes a set of packages to be installed, along with
 # configuration settings.
 spack:
-  # add package specs to the `specs` list
   specs:
   - r@4.5.1
-  - glibc
-  - libgit2
+  - python@3.14
+  - neovim
+  - gcc@13
   - cmake
-  - arrow
-  view: true
+  - libgit2
+  - curl
+  - openssl
+  - zstd
+  - lz4
+  - snappy
+  - brotli
+  - rust
   concretizer:
     unify: true
+
+  config:
+    build_stage:
+    - /opt/spack-stage
+    install_tree:
+      root: /opt/software
+    template_dirs:
+    - .devcontainer/templates
+
+  view: /opt/views/view
+
+  container:
+    format: singularity
+    template: Extensions.def
+    images:
+      os: rockylinux:8
+      spack: develop
+    strip: false
+
+    os_packages:
+      command: apt
+      update: true
+      build:
+      - gcc
+      - gcc-c++
+      - make
+      - clang-devel
+      - llvm-devel
+      final:
+      - bash
+      - less
+      - ca-certificates
+      - curl
+      - which
+      - findutils
+      - procps-ng
+      - git
+      - unzip
