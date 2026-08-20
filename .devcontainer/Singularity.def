@@ -70,16 +70,16 @@ EOF
     cargo install tree-sitter-cli \
       --version 0.26.11 \
       --locked \
-      --root /tmp/rust-tools
+      --root /opt/runtime-tools
 
     cargo install \
       --git https://github.com/eitsupi/arf \
       arf-console \
       --locked \
-      --root /tmp/rust-tools
+      --root /opt/runtime-tools
 
-    /tmp/rust-tools/bin/tree-sitter --version
-    /tmp/rust-tools/bin/arf --version
+    /opt/runtime-tools/bin/tree-sitter --version
+    /opt/runtime-tools/bin/arf --version
     
     # Install Quarto
     QUARTO_VERSION=1.10.18
@@ -94,15 +94,15 @@ EOF
 
     # Install uvr
     curl -fsSL https://raw.githubusercontent.com/nbafrank/uvr/main/install.sh \
-      | UVR_INSTALL_DIR=/tmp/rust-tools/bin sh
+      | UVR_INSTALL_DIR=/opt/runtime-tools/bin sh
 
 
     # Install uv/uvx
     curl -LsSf https://astral.sh/uv/install.sh \
-      | env UV_UNMANAGED_INSTALL=/tmp/rust-tools/bin sh
+      | env UV_UNMANAGED_INSTALL=/opt/runtime-tools/bin sh
 
 
-    chmod -R a+rX /tmp/rust-tools
+    chmod -R a+rX /opt/runtime-tools
 
 Bootstrap: docker
 From: docker.io/rockylinux:8
@@ -128,11 +128,11 @@ Stage: final
 
 
 %files from build
-    /tmp/rust-tools/bin/tree-sitter /usr/local/bin/tree-sitter
-    /tmp/rust-tools/bin/arf /usr/local/bin/arf
-    /tmp/rust-tools/bin/uv /usr/local/bin/uv
-    /tmp/rust-tools/bin/uvx /usr/local/bin/uvx
-    /tmp/rust-tools/bin/uvr /usr/local/bin/uvr
+    /opt/runtime-tools/bin/tree-sitter /usr/local/bin/tree-sitter
+    /opt/runtime-tools/bin/arf /usr/local/bin/arf
+    /opt/runtime-tools/bin/uv /usr/local/bin/uv
+    /opt/runtime-tools/bin/uvx /usr/local/bin/uvx
+    /opt/runtime-tools/bin/uvr /usr/local/bin/uvr
 
 %environment
     export PATH="/usr/local/bin:/opt/views/view/bin:$PATH"

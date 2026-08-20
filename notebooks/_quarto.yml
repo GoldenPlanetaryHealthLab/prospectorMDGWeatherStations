@@ -1,0 +1,24 @@
+project:
+  type: book
+
+book:
+  title: "MDG Weather Station Pipeline"
+  author: "Norah Jones"
+  date: "8/20/2026"
+  chapters:
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+
+
