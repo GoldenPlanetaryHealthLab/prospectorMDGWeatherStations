@@ -16,3 +16,4 @@ docs
 /.uvr/activate*
 
 .spack-env
+*.sif
